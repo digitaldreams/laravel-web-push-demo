@@ -7,12 +7,12 @@
 @endsection
 
 @section('content')
-    <div class="row">
+    <div class="row p-2">
         <div class="col-sm-8"><h3>Notifications</h3></div>
-        <div class="col-sm-4">
+        <div class="col-sm-4 text-right">
             <a class="text-primary lead"
-               href="{{route('notifications.markAllRead')}}"> Mark all as
-                read
+               href="{{route('notifications.markAllRead')}}">
+               <i class="fa fa-check-circle"> </i> Mark all as read
             </a>
         </div>
     </div>
