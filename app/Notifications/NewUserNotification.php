@@ -7,6 +7,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\WebPushMessage;
+use NotificationChannels\WebPush\WebPushChannel;
 
 class NewUserNotification extends Notification
 {
@@ -30,7 +32,7 @@ class NewUserNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', WebPushChannel::class];
     }
 
 
@@ -54,5 +56,15 @@ class NewUserNotification extends Notification
             'link' => '#',
             'icon' => 'fa fa-user-plus'
         ];
+    }
+
+    public function toWebPush($notifiable, $notification)
+    {
+        return (new WebPushMessage)
+            ->title('New User Sign Up')
+            ->body('Name:  ' . $this->user->name . ' Email: ' . $this->user->email)
+            ->data(['url' => route('notifications.index')])
+            ->badge('/images/logo.png')
+            ->requireInteraction();
     }
 }

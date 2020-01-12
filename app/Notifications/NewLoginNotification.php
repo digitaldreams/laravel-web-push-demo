@@ -7,6 +7,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\WebPushMessage;
+use NotificationChannels\WebPush\WebPushChannel;
 
 class NewLoginNotification extends Notification
 {
@@ -34,7 +36,7 @@ class NewLoginNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', WebPushChannel::class];
     }
 
     /**
@@ -57,5 +59,21 @@ class NewLoginNotification extends Notification
             'link' => '#',
             'icon' => 'fa fa-sign-in'
         ];
+    }
+
+    public function toWebPush($notifiable, $notification)
+    {
+        return (new WebPushMessage)
+            ->title('New Login')
+            ->body('User:  ' . $this->user->name)
+            ->data(['url' => route('notifications.index')])
+            ->badge('/images/logo.png')
+            ->requireInteraction();
+        // ->dir()
+        // ->image()
+        // ->lang()
+        // ->renotify()
+        // ->tag()
+        // ->vibrate()
     }
 }
