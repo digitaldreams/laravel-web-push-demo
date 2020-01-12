@@ -8,17 +8,28 @@
 
 @section('content')
     <div class="row p-2">
-        <div class="col-sm-6"><h3>Notifications</h3></div>
-        <div class="col-sm-6 text-right">
+        <div class="col-sm-5"><h3>Notifications</h3></div>
+        <div class="col-sm-7 text-right">
             <a class="text-primary lead"
                href="{{route('notifications.markAllRead')}}">
                 <i class="fa fa-check-circle"> </i> Mark all as read
             </a>
-            <button data-toggle="tooltip"
-                    title="We will notify important events via Push Message. You can see messages even when you are not on our site."
-                    class="btn btn-primary pushMessageBtn" onclick="subscribeUserToPush()"> Subscribe to Push
-                Notification
-            </button>
+
+            @if(auth()->user()->pushSubscriptions()->count()>0)
+                <a href="{{route('notifications.pushUnsubscribe')}}"
+                   title="You will no longer receive Push Messages" class="btn btn-warning"
+                ><i class="fa fa-sign-out"></i> Unsubscribe To Push Notification
+                </a>
+            @else
+                <button data-toggle="tooltip"
+                        title="We will notify important events via Push Message. You can see messages even when you are not on our site."
+                        class="btn btn-primary pushMessageBtn" onclick="subscribeUserToPush()"><i
+                            class="fa fa-sign-in"></i> Subscribe to Push
+                    Notification
+                </button>
+            @endif
+
+
         </div>
     </div>
 

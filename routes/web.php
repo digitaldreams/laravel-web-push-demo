@@ -22,3 +22,4 @@ Route::get('notifications/read-all', 'NotificationController@markAllRead')->name
 Route::get('notifications/read', 'NotificationController@read')->name('notifications.read');
 Route::get('notifications', 'NotificationController@index')->name('notifications.index');
 Route::get('notifications/push/subscribe', 'NotificationController@pushSubscribe')->name('notifications.pushSubscribe');
+Route::get('notifications/push/unsubscribe', 'NotificationController@unsubscribe')->name('notifications.pushUnsubscribe');
