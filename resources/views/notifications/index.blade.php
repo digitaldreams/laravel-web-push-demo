@@ -8,12 +8,17 @@
 
 @section('content')
     <div class="row p-2">
-        <div class="col-sm-8"><h3>Notifications</h3></div>
-        <div class="col-sm-4 text-right">
+        <div class="col-sm-6"><h3>Notifications</h3></div>
+        <div class="col-sm-6 text-right">
             <a class="text-primary lead"
                href="{{route('notifications.markAllRead')}}">
-               <i class="fa fa-check-circle"> </i> Mark all as read
+                <i class="fa fa-check-circle"> </i> Mark all as read
             </a>
+            <button data-toggle="tooltip"
+                    title="We will notify important events via Push Message. You can see messages even when you are not on our site."
+                    class="btn btn-primary pushMessageBtn" onclick="subscribeUserToPush()"> Subscribe to Push
+                Notification
+            </button>
         </div>
     </div>
 
@@ -54,6 +59,10 @@
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function (e) {
+            if (!('PushManager' in window) || !('serviceWorker' in navigator)) {
+                $(".pushMessageBtn").remove();
+            }
+
             var link = '{{route('notifications.read')}}';
             $(".notificationLink").on('click', function (e) {
                 e.preventDefault();
@@ -66,5 +75,51 @@
                 window.location.href = $(this).attr('href');
             });
         });
+
+        function subscribeUserToPush() {
+            if (!('PushManager' in window) || !('serviceWorker' in navigator)) {
+                return;
+            }
+            return navigator.serviceWorker.ready
+                .then(function (registration) {
+                    const subscribeOptions = {
+                        userVisibleOnly: true,
+                        applicationServerKey: urlB64ToUint8Array(
+                            '{{config('services.vapid_public_key')}}'
+                        )
+                    };
+                    return registration.pushManager.subscribe(subscribeOptions);
+                })
+                .then(function (pushSubscription) {
+                    pushSubscribe(pushSubscription);
+                    return pushSubscription;
+                });
+        }
+
+
+        function urlB64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding)
+                .replace(/\-/g, '+')
+                .replace(/_/g, '/');
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+            return outputArray;
+        }
+
+
+        function pushSubscribe(pushSubscription) {
+            var subscriptionObject = JSON.stringify(pushSubscription);
+            subscriptionObject = $.parseJSON(subscriptionObject)
+            var queryString = "?endpoint=" + pushSubscription.endpoint + "&keys[auth]=" + subscriptionObject.keys.auth + "&keys[p256dh]=" + subscriptionObject.keys.p256dh;
+            var url = '{{route('notifications.pushSubscribe')}}' + queryString;
+            $.get(url).then(function (response) {
+                window.location.reload();
+            });
+        }
+
     </script>
 @endsection

@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('notifications/read-all', 'NotificationController@markAllRead')->name('notifications.markAllRead');
 Route::get('notifications/read', 'NotificationController@read')->name('notifications.read');
 Route::get('notifications', 'NotificationController@index')->name('notifications.index');
+Route::get('notifications/push/subscribe', 'NotificationController@pushSubscribe')->name('notifications.pushSubscribe');

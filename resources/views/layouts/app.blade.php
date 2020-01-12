@@ -116,7 +116,9 @@
         </div>
     </main>
 </div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 <script type="text/javascript">
+
     window.addEventListener('load', async e => {
         if ('serviceWorker' in navigator) {
             try {
@@ -127,5 +129,6 @@
         }
     });
 </script>
+@yield('scripts')
 </body>
 </html>

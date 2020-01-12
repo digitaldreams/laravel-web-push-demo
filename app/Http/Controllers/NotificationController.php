@@ -42,4 +42,13 @@ class NotificationController extends Controller
             'status' => true
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function pushSubscribe(Request $request)
+    {
+
+    }
 }
