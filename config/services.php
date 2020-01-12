@@ -29,6 +29,6 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-    'vapid_public_key' => ''
+    'vapid_public_key' => env('VAPID_PUBLIC_KEY')
 
 ];
