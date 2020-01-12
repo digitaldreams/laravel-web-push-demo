@@ -30,3 +30,9 @@ async function networkFirst(req) {
         return await cache.match(req);
     }
 }
+
+self.addEventListener('push', event => {
+    var data = event.data.json();
+    var promise = self.registration.showNotification(data.title, data);
+    event.waitUntil(promise);
+});
