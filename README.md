@@ -1,4 +1,4 @@
-#Progressive Web APP with Web Push Notifications
+# Progressive Web APP with Web Push Notifications
 ### Useful Resources and its links
 Read this two awesome tutorial from Google about 
 [PWA](https://developers.google.com/web/progressive-web-apps) and [Web Push](https://developers.google.com/web/fundamentals/push-notifications/)
@@ -19,3 +19,5 @@ For simplicity we will split the whole process into few parts.
 05. Add Laravel Notification Channels to Existing Notification Class [49d49a5](https://github.com/digitaldreams/laravel-web-push-demo/commit/49d49a5718fc44817d8d3af863b45ffe761a726c)
 06. Show Server Sent Notification via Service Worker push event [a93d1a7](https://github.com/digitaldreams/laravel-web-push-demo/commit/a93d1a7d6aa9acf8b22ca7c9bc865ffaaf2cfb76)
 07. Notification Click Event [d49f92f](https://github.com/digitaldreams/laravel-web-push-demo/commit/d49f92f651731f9088e0cff552f961ab5c9c0f09)
+
+![SlidesForWebPush](https://user-images.githubusercontent.com/6059541/72578442-480fce00-3900-11ea-9957-7906c5fea114.gif)
